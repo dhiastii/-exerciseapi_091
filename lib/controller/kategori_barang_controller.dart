@@ -36,7 +36,21 @@ class KategoriBarangController {
 
   Future updateKategoriBarang(KategoriBarangModel kategoriBarang) async {
     var result = await http.post(
-        Uri.parse("${apiUrl}barang/updateKB/{$KategoriBarangModel(id: id)}}"),
+        Uri.parse("${apiUrl}barang/updateKB/{$KategoriBarangModel(id: id)}"),
+        body: {
+          "id_kategori_barang": kategoriBarang.id,
+          "nama_kategori_barang": kategoriBarang.nama,
+        });
+    if (result.statusCode == 200) {
+      return jsonDecode(result.body);
+    } else {
+      throw Exception('Gagal mengedit data kategori barang');
+    }
+  }
+
+  Future deleteKategoriBarang(KategoriBarangModel kategoriBarang) async {
+    var result = await http.post(
+        Uri.parse("${apiUrl}barang/deleteKB/{$KategoriBarangModel(id: id)}"),
         body: {
           "id_kategori_barang": kategoriBarang.id,
           "nama_kategori_barang": kategoriBarang.nama,
