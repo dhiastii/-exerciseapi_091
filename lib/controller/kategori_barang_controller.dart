@@ -3,7 +3,8 @@ import 'package:flutterapi/model/kategori_barang_model.dart';
 import 'package:http/http.dart' as http;
 
 class KategoriBarangController {
-  final String apiUrl = "http://10.0.2.2:8000/api/";
+  //final String apiUrl = "http://10.0.2.2:8000/api/";
+  final String apiUrl = "http://192.168.1.6:8000/api/";
 
   Future<List<KategoriBarangModel>> getKategoriBarang() async {
     var result = await http.get(Uri.parse("${apiUrl}barang/getAllKB/"));
@@ -33,15 +34,16 @@ class KategoriBarangController {
     }
   }
 
-  Future deleteKategoriBarang(KategoriBarangModel kategoriBarang) async {
-    var result =
-        await http.post(Uri.parse("${apiUrl}barang/deleteKB/{id}"), body: {
-      "nama_kategori_barang": kategoriBarang.nama,
-    });
+  Future updateKategoriBarang(KategoriBarangModel kategoriBarang) async {
+    var result = await http.post(
+        Uri.parse("${apiUrl}barang/updateKB/{$KategoriBarangModel(id: id)}}"),
+        body: {
+          "nama_kategori_barang": kategoriBarang.nama,
+        });
     if (result.statusCode == 200) {
       return jsonDecode(result.body);
     } else {
-      throw Exception('Gagal menghapus data kategori barang');
+      throw Exception('Gagal menambahkan data kategori barang');
     }
   }
 }
