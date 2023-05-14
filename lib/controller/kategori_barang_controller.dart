@@ -38,12 +38,13 @@ class KategoriBarangController {
     var result = await http.post(
         Uri.parse("${apiUrl}barang/updateKB/{$KategoriBarangModel(id: id)}}"),
         body: {
+          "id_kategori_barang": kategoriBarang.id,
           "nama_kategori_barang": kategoriBarang.nama,
         });
     if (result.statusCode == 200) {
       return jsonDecode(result.body);
     } else {
-      throw Exception('Gagal menambahkan data kategori barang');
+      throw Exception('Gagal mengedit data kategori barang');
     }
   }
 }
