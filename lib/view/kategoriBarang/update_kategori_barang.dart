@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:flutterapi/controller/kategori_barang_controller.dart';
-import 'package:flutterapi/model/kategori_barang_model.dart';
-import 'package:flutterapi/view/kategoriBarang/kategori_barang.dart';
+
+import 'kategori_barang.dart';
 
 class UpdateKategoriBarang extends StatefulWidget {
-  final String? nama;
-  final String? id;
+  final int? id;
+  final String? prevname;
 
-  const UpdateKategoriBarang({super.key, this.id, this.nama});
+  const UpdateKategoriBarang({super.key, this.id, this.prevname});
 
   @override
   State<UpdateKategoriBarang> createState() => _UpdateKategoriBarangState();
@@ -17,21 +17,15 @@ class UpdateKategoriBarang extends StatefulWidget {
 
 class _UpdateKategoriBarangState extends State<UpdateKategoriBarang> {
   final kategoriBarangController = KategoriBarangController();
-  String? nama;
-  String? id;
 
-  void addKategoriBarang() async {
-    KategoriBarangModel kategoriBarang =
-        KategoriBarangModel(nama: nama!, id: id!);
-    await kategoriBarangController.addKategoriBarang(kategoriBarang);
-  }
+  String? nama;
 
   @override
   Widget build(BuildContext context) {
     var formkey = GlobalKey<FormState>();
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Update Kategori Barang'),
+        title: const Text('Edit Kategori Barang'),
       ),
       body: Form(
         key: formkey,
@@ -46,7 +40,7 @@ class _UpdateKategoriBarangState extends State<UpdateKategoriBarang> {
               onChanged: (value) {
                 nama = value;
               },
-              initialValue: widget.nama,
+              initialValue: widget.prevname,
               validator: (value) {
                 if (value == null || value.isEmpty) {
                   return 'Nama Kategori is required';
@@ -59,7 +53,8 @@ class _UpdateKategoriBarangState extends State<UpdateKategoriBarang> {
               onPressed: () {
                 if (formkey.currentState!.validate()) {
                   formkey.currentState!.save();
-                  addKategoriBarang();
+                  kategoriBarangController.updateKategoriBarang(
+                      widget.id!, nama!);
                   Navigator.pushReplacement(
                       context,
                       MaterialPageRoute(

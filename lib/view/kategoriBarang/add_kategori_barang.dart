@@ -3,7 +3,10 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:flutterapi/controller/kategori_barang_controller.dart';
 import 'package:flutterapi/model/kategori_barang_model.dart';
-import 'package:flutterapi/view/kategoriBarang/kategori_barang.dart';
+import 'package:flutterapi/controller/kategori_barang_controller.dart';
+import 'package:flutterapi/model/kategori_barang_model.dart';
+
+import 'kategori_barang.dart';
 
 class AddKategoriBarang extends StatefulWidget {
   const AddKategoriBarang({super.key});
@@ -13,14 +16,12 @@ class AddKategoriBarang extends StatefulWidget {
 }
 
 class _AddKategoriBarangState extends State<AddKategoriBarang> {
-  final kategoriBarangController = KategoriBarangController();
+  final kategori_barang_controler = KategoriBarangController();
   String? nama;
-  String? id;
 
   void addKategoriBarang() async {
-    KategoriBarangModel kategoriBarang =
-        KategoriBarangModel(nama: nama!, id: id!);
-    await kategoriBarangController.addKategoriBarang(kategoriBarang);
+    KategoriBarangModel kategoriBarang = KategoriBarangModel(nama: nama!);
+    await kategori_barang_controler.addKategoriBarang(kategoriBarang);
   }
 
   @override
@@ -29,17 +30,6 @@ class _AddKategoriBarangState extends State<AddKategoriBarang> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Tambah Kategori Barang'),
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back),
-          onPressed: () {
-            Navigator.pushReplacement(
-              context,
-              MaterialPageRoute(
-                builder: (context) => const KategoriBarang(),
-              ),
-            ); // Kembali ke halaman sebelumnya
-          },
-        ),
       ),
       body: Form(
         key: formkey,

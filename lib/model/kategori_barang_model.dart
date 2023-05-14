@@ -2,15 +2,15 @@ import 'dart:convert';
 
 class KategoriBarangModel {
   final String nama;
-  final String id;
+  var id;
   KategoriBarangModel({
     required this.nama,
-    required this.id,
+    this.id,
   });
 
   KategoriBarangModel copyWith({
     String? nama,
-    String? id,
+    int? id,
   }) {
     return KategoriBarangModel(
       nama: nama ?? this.nama,
@@ -19,8 +19,7 @@ class KategoriBarangModel {
   }
 
   Map<String, dynamic> toMap() {
-    return {
-      //'nama_kategori_barang' harus sama dengan nama kolom di database
+    return <String, dynamic>{
       'nama_kategori_barang': nama,
       'id_kategori_barang': id,
     };
@@ -28,27 +27,26 @@ class KategoriBarangModel {
 
   factory KategoriBarangModel.fromMap(Map<String, dynamic> map) {
     return KategoriBarangModel(
-      nama: map['nama'] ?? '',
-      id: map['id'] ?? '',
+      nama: map['nama_kategori_barang'] as String,
+      id: map['id_kategori_barang'] as int,
     );
   }
 
   String toJson() => json.encode(toMap());
 
   factory KategoriBarangModel.fromJson(String source) =>
-      KategoriBarangModel.fromMap(json.decode(source));
+      KategoriBarangModel.fromMap(json.decode(source) as Map<String, dynamic>);
 
   @override
-  String toString() => 'Kategori_Barang_Controller(id: $id)';
+  String toString() => 'kategori_barang_model(nama: $nama,id:$id)';
 
   @override
-  bool operator ==(Object other) {
+  bool operator ==(covariant KategoriBarangModel other) {
     if (identical(this, other)) return true;
 
-    return other is KategoriBarangModel && other.nama == nama;
-    return other is KategoriBarangModel && other.id == id;
+    return other.nama == nama && other.id == id;
   }
 
   @override
-  int get hashCode => id.hashCode;
+  int get hashCode => nama.hashCode ^ id.hashCode;
 }
