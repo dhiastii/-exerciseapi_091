@@ -4,6 +4,7 @@ import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:flutterapi/controller/kategori_barang_controller.dart';
 import 'package:flutterapi/model/kategori_barang_model.dart';
 import 'package:flutterapi/view/kategoriBarang/add_kategori_barang.dart';
+import 'package:flutterapi/view/kategoriBarang/update_kategori_barang.dart';
 
 class KategoriBarang extends StatefulWidget {
   const KategoriBarang({super.key});
@@ -36,19 +37,46 @@ class _KategoriBarangState extends State<KategoriBarang> {
           title: const Text('Kategori Barang'),
         ),
         body: SafeArea(
-            child: ListView.builder(
-          itemCount: listKategoriBarang.length,
-          itemBuilder: (context, index) {
-            return Card(
-              child: ListTile(
+          child: ListView.builder(
+            itemCount: listKategoriBarang.length,
+            itemBuilder: (context, index) {
+              return Card(
+                child: ListTile(
                   title: Text(listKategoriBarang[index].nama),
-                  trailing: IconButton(
-                    onPressed: () {},
-                    icon: const Icon(Icons.edit),
-                  )),
-            );
-          },
-        )),
+                  trailing: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      IconButton(
+                        onPressed: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => UpdateKategoriBarang(
+                                      nama: listKategoriBarang[index].nama,
+                                      id: listKategoriBarang[index].id)));
+                        },
+                        icon: const Icon(Icons.edit),
+                      ),
+                      IconButton(
+                        onPressed: () {
+                          kategoriBarangController
+                              .deleteKategoriBarang(
+                                  listKategoriBarang[index].id)
+                              .then((value) {
+                            setState(() {
+                              listKategoriBarang.removeAt(index);
+                            });
+                          });
+                        },
+                        icon: const Icon(Icons.delete_rounded),
+                      ),
+                    ],
+                  ),
+                ),
+              );
+            },
+          ),
+        ),
         floatingActionButton: FloatingActionButton(
           onPressed: () {
             Navigator.push(
