@@ -6,7 +6,10 @@ import 'package:flutterapi/model/kategori_barang_model.dart';
 import 'package:flutterapi/view/kategoriBarang/kategori_barang.dart';
 
 class UpdateKategoriBarang extends StatefulWidget {
-  const UpdateKategoriBarang({super.key});
+  final String? nama;
+  final String? id;
+
+  const UpdateKategoriBarang({super.key, this.id, this.nama});
 
   @override
   State<UpdateKategoriBarang> createState() => _UpdateKategoriBarangState();
@@ -28,7 +31,7 @@ class _UpdateKategoriBarangState extends State<UpdateKategoriBarang> {
     var formkey = GlobalKey<FormState>();
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Tambah Kategori Barang'),
+        title: const Text('Update Kategori Barang'),
       ),
       body: Form(
         key: formkey,
@@ -43,6 +46,7 @@ class _UpdateKategoriBarangState extends State<UpdateKategoriBarang> {
               onChanged: (value) {
                 nama = value;
               },
+              initialValue: widget.nama,
               validator: (value) {
                 if (value == null || value.isEmpty) {
                   return 'Nama Kategori is required';

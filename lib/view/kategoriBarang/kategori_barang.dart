@@ -30,6 +30,12 @@ class _KategoriBarangState extends State<KategoriBarang> {
     });
   }
 
+  void deleteKategoriBarang(KategoriBarangModel kategoriBarang) {
+    setState(() {
+      listKategoriBarang.remove(kategoriBarang);
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -57,19 +63,18 @@ class _KategoriBarangState extends State<KategoriBarang> {
                         },
                         icon: const Icon(Icons.edit),
                       ),
-                      IconButton(
-                        onPressed: () {
-                          kategoriBarangController
-                              .deleteKategoriBarang(
-                                  listKategoriBarang[index].id)
-                              .then((value) {
-                            setState(() {
-                              listKategoriBarang.removeAt(index);
-                            });
-                          });
-                        },
-                        icon: const Icon(Icons.delete_rounded),
-                      ),
+                      // IconButton(
+                      //   onPressed: () {
+                      //     kategoriBarangController
+                      //         .deleteKategoriBarang(listKategoriBarang[index].id)
+                      //         .then((value) {
+                      //       setState(() {
+                      //         listKategoriBarang.removeAt(index);
+                      //       });
+                      //     });
+                      //   },
+                      //   icon: const Icon(Icons.delete_rounded),
+                      // ),
                     ],
                   ),
                 ),
